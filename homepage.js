@@ -1,3 +1,6 @@
+var userFomrEl = document.querySelector("#user-form");
+var nameInputEl = document.querySelector("#username");
+
 var getUserRepos = function(user) {
     //format the github api url
 var apiUrl = "https://api.github.com/users/" + user + "/repos";
@@ -9,4 +12,18 @@ fetch(apiUrl).then(function(response) {
       });
      });
     };
-getUserRepos();
+
+var formSubmitHandler = function(event) {
+    event.preventDefault();
+    console.log(event);
+    //get value from input element
+    var username = nameInputEl.value.trim();
+
+    if (username) {
+        getUserRepos(username);
+        nameInputEl.value = "";
+    } else {
+        alert("Please enter a GutHub username");
+    }
+};
+userFomrEl.addEventListener("submit", formSubmitHandler);
